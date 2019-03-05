@@ -129,7 +129,7 @@ INSERT INTO ers_user_roles VALUES (1, 'manager');
 INSERT INTO ers_user_roles VALUES (2, 'employee');
 
 INSERT INTO ers_users VALUES (0, 'alexj4564', 'asdf', 'Alex', 'Johnson', 'alexjohnson4564@gmail.com', 2);
-INSERT INTO ers_users VALUES (0, 'gabezapata', 'asdf', 'Gabe', 'Zapata', 'gzapata@gmail.com', 1);
+INSERT INTO ers_users VALUES (0, 'zapata', '1234', 'Gabe', 'Zapata', 'gzapata@gmail.com', 1);
 INSERT INTO ers_users VALUES (0, 'KingInTheNorth', 'knowsnothing', 'Jon', 'Snow', 'Iknownothing@gmail.com', 2);
 INSERT INTO ers_users VALUES (0, 'StanDarsh', 'asdf', 'Stan', 'Marsh', 'morelikeStanDarsh@gmail.com', 2);
 INSERT INTO ers_users VALUES (0, 'SlimJimTim', 'asdf', 'Jim', 'Tim', 'slimjimtim@gmail.com', 1);
