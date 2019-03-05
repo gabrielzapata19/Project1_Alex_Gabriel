@@ -24,7 +24,7 @@ public class UserDAO implements DAO<User> {
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			
-			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ers_users JOIN ers_user_roles USING (ers_user_role_id) WHERE ers_username = ?");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ers_users JOIN ers_user_roles ON ers_users.user_role_id = ers_user_roles.ers_user_role_id WHERE ers_username = ?");
 			pstmt.setString(1, username);
 			
 			List<User> users = this.mapResultSet(pstmt.executeQuery());
@@ -43,7 +43,7 @@ public class UserDAO implements DAO<User> {
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			
-			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ers_users JOIN ers_user_roles USING (ers_user_role_id) WHERE ers_username = ? AND ers_password = ?");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ers_users JOIN ers_user_roles ON ers_users.user_role_id = ers_user_roles.ers_user_role_id WHERE ers_username = ? AND ers_password = ?");
 			pstmt.setString(1, username);
 			pstmt.setString(2, password);
 			
@@ -64,7 +64,7 @@ public class UserDAO implements DAO<User> {
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			
-			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM ers_users JOIN ers_user_roles USING (ers_user_role_id)");
+			ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM ers_users JOIN ers_user_roles ON ers_users.user_role_id = ers_user_roles.ers_user_role_id");
 			users = this.mapResultSet(rs);
 			
 			users.forEach(u -> u.setPassword("*********"));
@@ -83,7 +83,7 @@ public class UserDAO implements DAO<User> {
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			
-			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ers_users JOIN ers_user_roles USING (ers_user_roles) WHERE ers_users_id = ?");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM ers_users JOIN ers_user_roles ON ers_users.user_role_id = ers_user_roles.ers_user_role_id WHERE ers_users_id = ?");
 			pstmt.setInt(1, userId);
 			
 			ResultSet rs = pstmt.executeQuery();
