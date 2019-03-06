@@ -104,11 +104,15 @@ public class UserDAO implements DAO<User> {
 	@Override
 	public User add(User newUser) {
 		
+		Role newRole = new Role();
+		newRole.setRoleId(2);
+		newRole.setRoleName("employee");
+		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			
 			conn.setAutoCommit(false);
 			
-			String sql = "INSERT INTO ers_users VALUES (0, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO ers_users VALUES (0, ?, ?, ?, ?, ?, 2)";
 			
 			String[] keys = new String[1];
 			keys[0] = "ers_users_id";
@@ -119,7 +123,6 @@ public class UserDAO implements DAO<User> {
 			pstmt.setString(3, newUser.getFirstName());
 			pstmt.setString(4, newUser.getLastName());
 			pstmt.setString(5, newUser.getEmail());
-			pstmt.setInt(5, newUser.getRole().getRoleId());
 			
 			int rowsInserted = pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();
@@ -128,6 +131,7 @@ public class UserDAO implements DAO<User> {
 				
 				while(rs.next()) {
 					newUser.setId(rs.getInt(1));
+					newUser.setRole(newRole);
 				}
 				
 				conn.commit();

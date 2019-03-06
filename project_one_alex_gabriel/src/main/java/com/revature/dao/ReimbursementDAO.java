@@ -70,7 +70,7 @@ public class ReimbursementDAO implements DAO<Reimbursement> {
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			
-			String sql = "SELECT * FROM ers_reimbursement JOIN ers_reimbursement_status USING (reimb_status_id) JOIN ers_reimbursement_type USING (reimb_type_id) JOIN ers_users ON ers_reimbursement.reimb_author = ers_users.ers_users_id WHERE reimb_author = ?";
+			String sql = "SELECT * FROM ers_reimbursement FULL OUTER JOIN ers_reimbursement_status USING (reimb_status_id) FULL OUTER JOIN ers_reimbursement_type USING (reimb_type_id) JOIN ers_users ON ers_reimbursement.reimb_author = ers_users.ers_users_id WHERE reimb_author = ?";
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			
@@ -144,10 +144,31 @@ public class ReimbursementDAO implements DAO<Reimbursement> {
 	@Override
 	public Reimbursement update(Reimbursement updatedReimbursement) {
 		
-		//when a reimbursement is updated, the 'resolved', 'resolver', and 'status' fields
-		//of the reimbursement will be updated (and nothing else)
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
+			
+			conn.setAutoCommit(false);
+			
+			String sql = "UPDATE ers_reimbursement SET reimb_amount = ?, reimb_resolved = ?, reimb_description = ?, reimb_resolver = ?, reimb_status_id = ?, reimb_type_id = ? WHERE reimb_id = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, updatedReimbursement.getAmount());
+			pstmt.setString(2, updatedReimbursement.getResolved());
+			pstmt.setString(3, updatedReimbursement.getDescription());
+			pstmt.setInt(4, updatedReimbursement.getResolver());
+			pstmt.setInt(5, updatedReimbursement.getReimbStatus().getReimbStatusId());
+			pstmt.setInt(6, updatedReimbursement.getReimbType().getReimbTypeId());
+			pstmt.setInt(7, updatedReimbursement.getId());
+			
+			if(pstmt.executeUpdate() != 0) {
+				conn.commit();
+				return updatedReimbursement;
+			}
+			
+		} catch (SQLException e) {
+			log.error(e.getMessage());
+		}
 		
-		return null; //this is just a placeholder for now so that the un-implemented method doesn't yell at us
+		return null;
 	}
 	
 	@Override

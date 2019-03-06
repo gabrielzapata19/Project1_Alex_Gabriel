@@ -139,9 +139,9 @@ INSERT INTO ers_reimbursement VALUES (0, 300, '2019-03-01', '2019-03-01', 'I fle
 INSERT INTO ers_reimbursement VALUES (0, 80, '2019-03-01', '2019-03-02', 'I rode to the Wall because Winter is coming!', null, 3, 2, 3, 2);
 INSERT INTO ers_reimbursement VALUES (0, 200, '2019-03-02', '2019-03-02', 'I stayed in a hotel.', null, 4, 2, 2, 1);
 INSERT INTO ers_reimbursement VALUES (0, 65, '2019-03-02', '2019-03-03', 'I stayed in a motel.', null, 5, 2, 2, 1);
-INSERT INTO ers_reimbursement VALUES (0, 116, '2019-03-03', null, 'I stayed in a Holiday Inn.', null, 1, 2, null, 1);
-INSERT INTO ers_reimbursement VALUES (0, 10000, '2019-03-03', null, 'I was stabbed to death and had to be resurrected.', null, 3, 2, null, 4);
-INSERT INTO ers_reimbursement VALUES (0, 55, '2019-03-03', null, 'Steak again.', null, 1, 2, null, 3);
+INSERT INTO ers_reimbursement VALUES (0, 116, '2019-03-03', null, 'I stayed in a Holiday Inn.', null, 1, null, 1, 1);
+INSERT INTO ers_reimbursement VALUES (0, 10000, '2019-03-03', null, 'I was stabbed to death and had to be resurrected.', null, 3, null, 1, 4);
+INSERT INTO ers_reimbursement VALUES (0, 55, '2019-03-03', null, 'Steak again.', null, 1, null, 1, 3);
 
 commit; 
 
