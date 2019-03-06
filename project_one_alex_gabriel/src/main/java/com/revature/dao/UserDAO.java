@@ -138,10 +138,11 @@ public class UserDAO implements DAO<User> {
 				
 			}
 					
-		} catch (SQLIntegrityConstraintViolationException sicve) { 
-			System.out.println("[ERROR] - Username already taken!");
+		} catch (SQLIntegrityConstraintViolationException sicve) {
+			log.error(sicve.getMessage());
+			log.warn("Username already taken.");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 		
 		if(newUser.getId() == 0) return null;
