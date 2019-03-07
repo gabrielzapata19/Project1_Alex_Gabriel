@@ -1,6 +1,5 @@
 package com.revature.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -14,15 +13,8 @@ public class ReimbursementService {
 	
 	private ReimbursementDAO reimDao = new ReimbursementDAO();
 	
-	
-	public List<Reimbursement> getAllReimbursements(Reimbursement managerReimbursement){
-		
-		List<Reimbursement> reimList = new ArrayList<>();
-		//check if manager is the one accessing all reimbursements 
-		if(managerReimbursement.getAuthor() == 2) {
-			return reimDao.getAll();
-		}
-		return reimList;
+	public List<Reimbursement> getAll(){
+		return reimDao.getAll();
 	}
 	
 	public Reimbursement getById(int reimbId) {
@@ -30,26 +22,21 @@ public class ReimbursementService {
 	}
 	
 	public List<Reimbursement> getByAuthor(int reimAuthor) {
-		
 		return reimDao.getByAuthor(reimAuthor);
 	}
 	
-	
-	
-	public Reimbursement addReim(Reimbursement newReimbursement) {
+	public Reimbursement add(Reimbursement newReimbursement) {
+		//check if all fields are not empty, except for receipt
 		if(newReimbursement.getId() == 0 || newReimbursement.getAmount() == 0 || newReimbursement.getSubmitted().equals("") 
 				|| newReimbursement.getResolved().equals("") || newReimbursement.getDescription().equals("") || newReimbursement.getAuthor() == 0
 				|| newReimbursement.getResolver() == 0 || newReimbursement.getReimbStatus().equals(null) || newReimbursement.getReimbType().equals(null)) {
-			log.info("Updated Reimbursement has empty fields!");
+			log.info("New Reimbursement has empty fields!");
 			return null;
 		}
 		return reimDao.add(newReimbursement);
 	}
 	
-	
-	
-	
-	public Reimbursement updateReim(Reimbursement updatedReimbursement) {
+	public Reimbursement update(Reimbursement updatedReimbursement) {
 		
 		//check if all fields are not empty, except for receipt
 		if(updatedReimbursement.getId() == 0 || updatedReimbursement.getAmount() == 0 || updatedReimbursement.getSubmitted().equals("") 
@@ -59,6 +46,11 @@ public class ReimbursementService {
 			return null;
 		}
 		
+		//make sure finance manager cannot approve/deny their own requests
+		if(updatedReimbursement.getResolver() == updatedReimbursement.getAuthor()) {
+			log.warn("Finance Manager unauthorized to approve/deny own reimbursement request!");
+			return null;
+		}
 		
 		//Attempt to update updatedReimbursement on to database
 		Reimbursement persistedReimbursement = reimDao.update(updatedReimbursement);
@@ -76,7 +68,5 @@ public class ReimbursementService {
 	public boolean delete(int Reimbursement) {
 		return false;
 	}
-	
-	
 	
 }

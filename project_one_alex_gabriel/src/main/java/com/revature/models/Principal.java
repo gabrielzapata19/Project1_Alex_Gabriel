@@ -2,7 +2,6 @@ package com.revature.models;
 
 public class Principal {
 	
-	
 	//JWT will take a string for the id and Role
 	private String id;
 	private String role;

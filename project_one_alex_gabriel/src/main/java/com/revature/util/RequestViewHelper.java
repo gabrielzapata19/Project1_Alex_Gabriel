@@ -35,7 +35,7 @@ public class RequestViewHelper {
 				return null;
 			}
 			
-			log.info("Fetching dashboard.html");
+			log.info("Fetching employee.html");
 			return "partials/employee.html";
 		
 		case "/project_one_alex_gabriel/manager.view":
@@ -47,17 +47,24 @@ public class RequestViewHelper {
 				return null;
 			}
 			
-			log.info("Fetching dashboard.html");
-			return "partials/employee.html";
+			log.info("Fetching manager.html");
+			return "partials/manager.html";
 			
+		case "/project_one_alex_gabriel/reimbursement.view":
 			
+			Principal principalReimbursement = (Principal) request.getAttribute("principal");
 			
+			if(principalReimbursement == null) {
+				log.warn("No principal attribute found on request object");
+				return null;
+			}
 			
+			log.info("Fetching reimbursement.html");
+			return "partials/reimbursement.html";
 			
 		default: 
 			log.info("Invalid view requested");
 			return null;
-		
 		}
 	}
 
