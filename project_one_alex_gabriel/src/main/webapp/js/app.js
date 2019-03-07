@@ -1,10 +1,10 @@
 window.onload = function() {
     
-	document.getElementById('to-login').addEventListener('click', loadLogin);
-    document.getElementById('to-logout').addEventListener('click', logout);
+    loadLogin();
     //yet to be implemented
-    document.getElementById('to-employee').addEventListener('click', loademployee);
-    document.getElementById('to-manager').addEventListener('click', loadManager);
+    // document.getElementById('to-employee').addEventListener('click', loadRegister);
+    // document.getElementById('to-employee').addEventListener('click', loadEmployee);
+    // document.getElementById('to-manager').addEventListener('click', loadManager);
     
 }
 
@@ -14,14 +14,9 @@ window.onload = function() {
         - configureLogin()
         - login()
 */
+
 async function loadLogin() {
     console.log('in loadLogin()');
-
-    // fetchView('login.view').then(view => {
-    //     APP_VIEW.innerHTML = view;
-    //     DYNAMIC_CSS_LINK.href = 'css/login.css';
-    //     configureLogin();
-    // });
     
     APP_VIEW.innerHTML = await fetchView('login.view');
     DYNAMIC_CSS_LINK.href = 'css/login.css';
@@ -81,10 +76,9 @@ async function loadRegister() {
 function configureRegister() {
     console.log('in configureRegister()');
     document.getElementById('register-username').addEventListener('blur', validateUsername);
-    document.getElementById('register-password').addEventListener('keyup', validatePassword);
+    document.getElementById('register-password').addEventListener('blur', validatePassword);
     document.getElementById('register-account').addEventListener('click', register);
 }
-
 function validateUsername(event) {
     console.log('in validateUsername');
     console.log(event.target.value);
