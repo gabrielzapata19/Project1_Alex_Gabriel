@@ -1,5 +1,6 @@
 window.onload = function() {
-    document.getElementById('to-login').addEventListener('click', loadLogin);
+    
+	document.getElementById('to-login').addEventListener('click', loadLogin);
     document.getElementById('to-logout').addEventListener('click', logout);
     //yet to be implemented
     document.getElementById('to-employee').addEventListener('click', loademployee);
@@ -15,7 +16,13 @@ window.onload = function() {
 */
 async function loadLogin() {
     console.log('in loadLogin()');
-   
+
+    // fetchView('login.view').then(view => {
+    //     APP_VIEW.innerHTML = view;
+    //     DYNAMIC_CSS_LINK.href = 'css/login.css';
+    //     configureLogin();
+    // });
+    
     APP_VIEW.innerHTML = await fetchView('login.view');
     DYNAMIC_CSS_LINK.href = 'css/login.css';
     configureLogin();
@@ -44,30 +51,105 @@ async function login() {
 
     if(response.status == 200) {
         document.getElementById('alert-msg').hidden = true;
-
-        let user = await response.json();
-        console.log(user);
-        
+        localStorage.setItem('jwt', response.headers.get('Authorization'));
+        loadDashboard();
     } else {
         document.getElementById('alert-msg').hidden = false;
     }
 
 }
 
+//-------------------------------------------------------------------------------------
+
+/*
+    Register component
+
+        - loadRegister()
+        - configureRegister()
+        - validateUsername()
+        - validatePassword()
+        - register()
+*/
+
+async function loadRegister() {
+    console.log('in loadRegister()');
+    APP_VIEW.innerHTML = await fetchView('register.view');
+    DYNAMIC_CSS_LINK.href = 'css/register.css';
+    configureRegister();
+}
+
+function configureRegister() {
+    console.log('in configureRegister()');
+    document.getElementById('register-username').addEventListener('blur', validateUsername);
+    document.getElementById('register-password').addEventListener('keyup', validatePassword);
+    document.getElementById('register-account').addEventListener('click', register);
+}
+
+function validateUsername(event) {
+    console.log('in validateUsername');
+    console.log(event.target.value);
+}
+
+function validatePassword(event) {
+    console.log('in validatePassword');
+    console.log(event.target.value);
+}
+
+async function register() {
+    console.log('in register()');
+
+    let newUser = {
+        id: 0,
+        username: document.getElementById('register-username').value,
+        password: document.getElementById('register-password').value,
+        firstName: document.getElementById('register-fn').value,
+        lastName: document.getElementById('register-ln').value,
+        role: {}
+    };
+
+    let response = await fetch('users', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newUser)
+    });
+
+    let responseBody = await response.json();
+    console.log(responseBody);
+}
 
 //-------------------------------------------------------------------------------------
 
-function fetchView(uri) {
-    let responsePromise = fetch(uri);
-    
-    let responseBodyPromise = responsePromise.then(resp => {
-        if(resp.status == 401) loadLogin();
-        return resp.text();
+/*
+    Dashboard component
+        - loadDashboard()
+ */
+
+async function loadDashboard() {
+    console.log('in loadDashboard()');
+    APP_VIEW.innerHTML = await fetchView('dashboard.view');
+    DYNAMIC_CSS_LINK.href = 'css/dashboard.css';
+    configureDashboard();
+}
+
+function configureDashboard() {
+    console.log('in configureDashboard()');
+}
+
+//-------------------------------------------------------------------------------------
+async function fetchView(uri) {
+    let response = await fetch(uri, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+            'Authorization': localStorage.getItem('jwt')
+        }
     });
 
-    let data = responseBodyPromise.then(dataText => dataText);
-    return data;
-
+    if(response.status == 401) loadLogin();
+    return await response.text();
 }
 
 //-------------------------------------------------------------------------------------

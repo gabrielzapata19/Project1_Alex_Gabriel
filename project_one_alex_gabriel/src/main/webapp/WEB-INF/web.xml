@@ -8,7 +8,7 @@
   </welcome-file-list>
   
   
-	<!--View Servlet below. Other servlets will be added with an annotation -->
+	<!--View Servlet below. Other servlets will be registered with an annotation -->
 	
   <servlet>
   	<servlet-name>ViewServlet</servlet-name>
