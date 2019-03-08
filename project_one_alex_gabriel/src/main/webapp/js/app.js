@@ -1,12 +1,9 @@
 window.onload = function() {
     
-
-    loadLogin();
     //yet to be implemented
-    //document.getElementById('register-button').addEventListener('click', loadRegister);
     // document.getElementById('to-employee').addEventListener('click', loadEmployee);
     // document.getElementById('to-manager').addEventListener('click', loadManager);
-   
+    loadLogin();
     
 }
 
@@ -29,6 +26,7 @@ function configureLogin() {
     console.log('in configureLogin()');
     document.getElementById('alert-msg').hidden = true;
     document.getElementById('submit-creds').addEventListener('click', login);
+    document.getElementById('register-button').addEventListener('click', loadRegister);
 }
 
 async function login() {
@@ -86,6 +84,7 @@ function configureRegister() {
     document.getElementById('register-email').addEventListener('blur', validateEmail);
     document.getElementById('register-account').addEventListener('click', register);
 }
+
 function validateUsername(event) {
     console.log('in validateUsername');
     console.log(event.target.value);
@@ -147,12 +146,12 @@ async function register() {
 async function loadEmployee() {
     console.log('in loadEmployee()');
     APP_VIEW.innerHTML = await fetchView('employee.view');
-    DYNAMIC_CSS_LINK.href = 'css/dashboard.css';
+    DYNAMIC_CSS_LINK.href = 'css/employee.css';
     configureDashboard();
 }
 
-function configureDashboard() {
-    console.log('in configureDashboard()');
+function configureEmployee() {
+    console.log('in configureEmployee()');
 }
 
 //-------------------------------------------------------------------------------------
