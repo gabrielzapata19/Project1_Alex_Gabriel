@@ -108,11 +108,12 @@ function validateLastName(event) {
 }
 
 function validateEmail(event) {
-
-    
     let reg = /\S+@\S+\.\S+/;
-    reg.test(event.target.value);
-    
+    let email = event.target.value;
+    let validFormat = reg.test(event.target.value);
+    if(validFormat && email.length > 255 )
+   
+
     console.log('in validateEmail');
     console.log(event.target.value);
 }
