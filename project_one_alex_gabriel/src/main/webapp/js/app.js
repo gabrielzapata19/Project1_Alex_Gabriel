@@ -36,6 +36,7 @@ async function login() {
     let credentials = [];
     credentials.push(document.getElementById('username-cred').value);
     credentials.push(document.getElementById('password-cred').value);
+    console.log(JSON.stringify(credentials));
 
     let response = await fetch('auth', {
         method: 'POST',
@@ -49,7 +50,7 @@ async function login() {
     if(response.status == 200) {
         document.getElementById('alert-msg').hidden = true;
         localStorage.setItem('jwt', response.headers.get('Authorization'));
-        loadDashboard();
+        loadEmployee();
     } else {
         document.getElementById('alert-msg').hidden = false;
     }
@@ -139,13 +140,13 @@ async function register() {
 //-------------------------------------------------------------------------------------
 
 /*
-    Dashboard component
-        - loadDashboard()
+    Employee component
+        - loadEmployee()
  */
 
-async function loadDashboard() {
-    console.log('in loadDashboard()');
-    APP_VIEW.innerHTML = await fetchView('dashboard.view');
+async function loadEmployee() {
+    console.log('in loadEmployee()');
+    APP_VIEW.innerHTML = await fetchView('employee.view');
     DYNAMIC_CSS_LINK.href = 'css/dashboard.css';
     configureDashboard();
 }
