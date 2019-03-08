@@ -23,41 +23,42 @@ public class AuthServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static Logger log = Logger.getLogger(AuthServlet.class);
 	
-	private final  UserService userService = new UserService();
+	private final UserService userService = new UserService();
 	
-	protected void doPost(HttpServletResponse resp, HttpServletRequest req) throws IOException, ServletException{
-		
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		ObjectMapper mapper = new ObjectMapper();
-		String[] creds = null;
-		
+		String[] credentials = null;
+//		System.out.println(req.getInputStream());
+//		System.out.println(mapper.readValue(req.getInputStream(), String[].class));
 		try {
-			creds = mapper.readValue(req.getInputStream(), String[].class);
-		}catch (MismatchedInputException mie) {
+			credentials = mapper.readValue(req.getInputStream(), String[].class);
+			
+		} catch (MismatchedInputException mie) {
 			log.error(mie.getMessage());
 			resp.setStatus(400);
 			return;
 		} catch (Exception e) {
+			e.printStackTrace();
 			log.error(e.getMessage());
 			resp.setStatus(500);
 			return;
 		}
-		//check if number of credentials is equal to 2 
-		if(creds != null && creds.length != 2) {
-			log.warn("Invalid number of credentials entered");
+		
+		if(credentials != null && credentials.length != 2) {
+			log.warn("Invalid request, unexpected number of credential values");
 			resp.setStatus(400);
 			return;
 		}
-		User user = userService.getByCredentials(creds[0], creds[1]);
+		
+		User user = userService.getByCredentials(credentials[0], credentials[1]);
 		
 		if(user == null) {
 			resp.setStatus(401);
 			return;
 		}
 		
-		//
 		resp.setStatus(200);
 		resp.addHeader(JwtConfig.HEADER, JwtConfig.PREFIX + JwtGenerator.createJwt(user));
-		
 	}
-			
 }

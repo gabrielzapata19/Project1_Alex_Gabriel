@@ -1,4 +1,5 @@
 package com.revature.util;
+
 import java.util.Date;
 
 import org.apache.log4j.Logger;
