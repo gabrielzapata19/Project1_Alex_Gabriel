@@ -1,10 +1,12 @@
 window.onload = function() {
     
+
     loadLogin();
     //yet to be implemented
-    // document.getElementById('to-employee').addEventListener('click', loadRegister);
+    //document.getElementById('register-button').addEventListener('click', loadRegister);
     // document.getElementById('to-employee').addEventListener('click', loadEmployee);
     // document.getElementById('to-manager').addEventListener('click', loadManager);
+   
     
 }
 
@@ -73,10 +75,14 @@ async function loadRegister() {
     configureRegister();
 }
 
+//finish implementing funciton for all
 function configureRegister() {
     console.log('in configureRegister()');
     document.getElementById('register-username').addEventListener('blur', validateUsername);
     document.getElementById('register-password').addEventListener('blur', validatePassword);
+    document.getElementById('register-first-name').addEventListener('blur', validateFirstName);
+    document.getElementById('register-last-name').addEventListener('blur', validateLastName);
+    document.getElementById('register-email').addEventListener('blur', validateEmail);
     document.getElementById('register-account').addEventListener('click', register);
 }
 function validateUsername(event) {
@@ -89,6 +95,21 @@ function validatePassword(event) {
     console.log(event.target.value);
 }
 
+function validateFirstName(event) {
+    console.log('in validateFirstName');
+    console.log(event.target.value);
+}
+
+function validateLastName(event) {
+    console.log('in validateLastName');
+    console.log(event.target.value);
+}
+
+function validateEmail(event) {
+    console.log('in validateEmail');
+    console.log(event.target.value);
+}
+
 async function register() {
     console.log('in register()');
 
@@ -96,8 +117,9 @@ async function register() {
         id: 0,
         username: document.getElementById('register-username').value,
         password: document.getElementById('register-password').value,
-        firstName: document.getElementById('register-fn').value,
-        lastName: document.getElementById('register-ln').value,
+        firstName: document.getElementById('register-first-name').value,
+        lastName: document.getElementById('register-last-name').value,
+        email: document.getElementById('register-email').value,
         role: {}
     };
 
