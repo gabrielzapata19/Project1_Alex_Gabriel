@@ -46,7 +46,7 @@ public class UserService {
 
 		// Verify that there are no empty fields
 		if (newUser.getUsername().equals("") || newUser.getPassword().equals("") || newUser.getFirstName().equals("")
-				|| newUser.getLastName().equals("")) {
+				|| newUser.getLastName().equals("") || newUser.getEmail().equals("")){
 			log.info("New User had empty fields!");
 			return null;
 		}
@@ -58,7 +58,7 @@ public class UserService {
 
 		// Verify that there are no empty fields
 		if (updatedUser.getUsername().equals("") || updatedUser.getPassword().equals("")
-				|| updatedUser.getFirstName().equals("") || updatedUser.getLastName().equals("")) {
+				|| updatedUser.getFirstName().equals("") || updatedUser.getLastName().equals("") || updatedUser.getEmail().equals("")) {
 			log.info("Updated User had empty fields!");
 			return null;
 		}

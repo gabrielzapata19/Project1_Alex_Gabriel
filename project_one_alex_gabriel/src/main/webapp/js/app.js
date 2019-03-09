@@ -34,7 +34,6 @@ async function login() {
     let credentials = [];
     credentials.push(document.getElementById('username-cred').value);
     credentials.push(document.getElementById('password-cred').value);
-    console.log(JSON.stringify(credentials));
 
     let response = await fetch('auth', {
         method: 'POST',
@@ -62,8 +61,9 @@ async function login() {
 
         - loadRegister()
         - configureRegister()
-        - validateUsername()
-        - validatePassword()
+        ...
+        ...
+        ...
         - register()
 */
 
@@ -74,7 +74,7 @@ async function loadRegister() {
     configureRegister();
 }
 
-//finish implementing funciton for all
+//finish implementing functionality for all
 function configureRegister() {
     console.log('in configureRegister()');
     document.getElementById('alert-msg-registration').hidden = true;
@@ -85,37 +85,56 @@ function configureRegister() {
     document.getElementById('register-last-name').addEventListener('blur', validateLastName);
     document.getElementById('register-email').addEventListener('blur', validateEmail);
     document.getElementById('register-account').addEventListener('click', register);
+    
+    document.getElementById('register-password').disabled = true;
+    document.getElementById('register-first-name').disabled = true;
+    document.getElementById('register-last-name').disabled = true;
+    document.getElementById('register-email').disabled = true;
+    document.getElementById('register-account').disabled = true;
 }
 
 function validateUsername(event) {
-    console.log('in validateUsername');
-    console.log(event.target.value);
+	if(event.target.value.length < 4 ){
+        document.getElementById('register-account').disabled = true;
+    }
+    else{
+        document.getElementById('register-password').disabled = false;
+    }
 }
 
 function validatePassword(event) {
-    console.log('in validatePassword');
-    console.log(event.target.value);
+	if(event.target.value.length < 4 ){
+        document.getElementById('register-account').disabled = true;
+    }
+    else{
+        document.getElementById('register-first-name').disabled = false;
+    }
 }
 
 function validateFirstName(event) {
-    console.log('in validateFirstName');
-    console.log(event.target.value);
+	if(!(/^[a-zA-Z ]+$/.test(event.target.value))){
+		document.getElementById('register-account').disabled = true;
+    }
+    else{
+        document.getElementById('register-last-name').disabled = false;
+    }
 }
 
 function validateLastName(event) {
-    console.log('in validateLastName');
-    console.log(event.target.value);
+	if(!(/^[a-zA-Z ]+$/.test(event.target.value))){
+		document.getElementById('register-account').disabled = true;
+    }
+    else{
+        document.getElementById('register-email').disabled = false;
+    }
 }
 
 function validateEmail(event) {
-    let reg = /\S+@\S+\.\S+/;
-    let email = event.target.value;
-    let validFormat = reg.test(event.target.value);
-    if(validFormat && email.length > 255 )
-   
-
-    console.log('in validateEmail');
-    console.log(event.target.value);
+	if(!(/\S+@\S+\.\S+/.test(event.target.value))){
+        document.getElementById('register-account').disabled = true;
+    }else{
+        document.getElementById('register-account').disabled = false;
+    }
 }
 
 async function register() {
@@ -140,22 +159,17 @@ async function register() {
         body: JSON.stringify(newUser)
     });
 
-    console.log(JSON.stringify("line 137" + newUser));
-
     let responseBody = await response.json();
-    console.log("line 140" + responseBody);
 
-    // if(response.status == 200) {
+    if(responseBody != null) {
         
-    //     document.getElementById('alert-msg-registration').hidden = true;
-    //     document.getElementById('registration-success').hidden = false;
-    //     setTimeout(loadLogin, 2000);
+    	document.getElementById('alert-msg-registration').hidden = true;
+        document.getElementById('registration-success').hidden = false;
+        setTimeout(loadLogin, 3000);
         
-    // } else {
-    //     document.getElementById('alert-msg-registration').hidden = false;
-    // }
-
-
+    } else {
+    	document.getElementById('alert-msg-registration').hidden = false;
+    }
 
 }
 
@@ -170,7 +184,7 @@ async function loadEmployee() {
     console.log('in loadEmployee()');
     APP_VIEW.innerHTML = await fetchView('employee.view');
     DYNAMIC_CSS_LINK.href = 'css/employee.css';
-    configureDashboard();
+    configureEmployee();
 }
 
 function configureEmployee() {
