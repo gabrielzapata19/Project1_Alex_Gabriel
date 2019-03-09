@@ -37,7 +37,7 @@ public class ConnectionFactory {
 			DriverManager.registerDriver(new OracleDriver());
 			
 			// Load the properties file (application.properties) keys/values into the Properties object
-			prop.load(new FileReader("/Users/alexjohnson/Desktop/Revature Training Program/Repos/Project1_Alex_Gabriel/project_one_alex_gabriel/src/main/resources/application.properties"));
+			prop.load(new FileReader("C:\\Users\\zapat\\Documents\\Revature Training\\Project1\\Project1_Alex_Gabriel\\project_one_alex_gabriel\\src\\main\\resources\\application.properties"));
 			
 			// Get a connection from the DriverManager class
 			conn = DriverManager.getConnection(
@@ -53,6 +53,7 @@ public class ConnectionFactory {
 			log.error(ioe.getMessage());
 		}
 		
+		if (conn == null) System.out.println("Connection object is null");
 		return conn;
 	}
 

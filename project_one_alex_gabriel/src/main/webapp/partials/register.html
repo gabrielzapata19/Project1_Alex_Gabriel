@@ -4,13 +4,11 @@
             <div class="card">
                 <div class="card-header">Register</div>
                 <div class="card-body">
-                    <form name="my-form" onsubmit="return validform()" action="success.php" method="">
-
-
+                    
                         <div class="form-group row">
                             <label for="user_name" class="col-md-4 col-form-label text-md-right">Username</label>
                             <div class="col-md-6">
-                                <input type="text" id="register-username" class="form-control" name="username">
+                                <input type="text" id="register-username"  name="username">
                             </div>
                         </div>
 
@@ -18,7 +16,7 @@
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
                             <div class="col-md-6">
-                                <input type="text" id="register-password" class="form-control" name="password">
+                                <input type="text" id="register-password"  name="password">
                             </div>
                         </div>
 
@@ -27,7 +25,7 @@
                         <div class="form-group row">
                             <label for="full_name" class="col-md-4 col-form-label text-md-right">First Name</label>
                             <div class="col-md-6">
-                                <input type="text" id="register-first-name" class="form-control" name="first-name">
+                                <input type="text" id="register-first-name"  name="first-name">
                             </div>
                         </div>
 
@@ -35,7 +33,7 @@
                         <div class="form-group row">
                             <label for="last_name" class="col-md-4 col-form-label text-md-right">Last Name</label>
                             <div class="col-md-6">
-                                <input type="text" id="register-last-name" class="form-control" name="last-name">
+                                <input type="text" id="register-last-name"  name="last-name">
                             </div>
                         </div>
 
@@ -44,19 +42,30 @@
                         <div class="form-group row">
                             <label for="email_address" class="col-md-4 col-form-label text-md-right">Email Address</label>
                             <div class="col-md-6">
-                                <input type="text" id="register-email" class="form-control" name="email-address">
+                                <input type="text" id="register-email" name="email-address">
                             </div>
                         </div>
 
 
 
                         <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
+                            <button id= "register-account" class="btn btn-primary">
                                 Register
                             </button>
+
+
+                            <div class="alert alert-danger text-center" id="alert-msg-registration" role="alert">
+                                Please fill all fields.
+                            </div>
+
+                            <div class="text-center" id="registration-success" role="alert">
+                                Registration successful. Redirecting to Login page.
+                            </div>
+
                         </div>
+
                 </div>
-                </form>
+
             </div>
         </div>
     </div>

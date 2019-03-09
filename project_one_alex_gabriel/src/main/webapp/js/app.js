@@ -55,7 +55,7 @@ async function login() {
 
 }
 
-//-------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------
 
 /*
     Register component
@@ -77,6 +77,8 @@ async function loadRegister() {
 //finish implementing funciton for all
 function configureRegister() {
     console.log('in configureRegister()');
+    document.getElementById('alert-msg-registration').hidden = true;
+    document.getElementById('registration-success').hidden = true;
     document.getElementById('register-username').addEventListener('blur', validateUsername);
     document.getElementById('register-password').addEventListener('blur', validatePassword);
     document.getElementById('register-first-name').addEventListener('blur', validateFirstName);
@@ -106,13 +108,19 @@ function validateLastName(event) {
 }
 
 function validateEmail(event) {
+    let reg = /\S+@\S+\.\S+/;
+    let email = event.target.value;
+    let validFormat = reg.test(event.target.value);
+    if(validFormat && email.length > 255 )
+   
+
     console.log('in validateEmail');
     console.log(event.target.value);
 }
 
 async function register() {
     console.log('in register()');
-
+    
     let newUser = {
         id: 0,
         username: document.getElementById('register-username').value,
@@ -132,8 +140,23 @@ async function register() {
         body: JSON.stringify(newUser)
     });
 
+    console.log(JSON.stringify("line 137" + newUser));
+
     let responseBody = await response.json();
-    console.log(responseBody);
+    console.log("line 140" + responseBody);
+
+    // if(response.status == 200) {
+        
+    //     document.getElementById('alert-msg-registration').hidden = true;
+    //     document.getElementById('registration-success').hidden = false;
+    //     setTimeout(loadLogin, 2000);
+        
+    // } else {
+    //     document.getElementById('alert-msg-registration').hidden = false;
+    // }
+
+
+
 }
 
 //-------------------------------------------------------------------------------------
