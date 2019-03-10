@@ -1,4 +1,67 @@
-<div>
-	<h1>Hello!</h1>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
-</div>
+<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Dashboard</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a id = "logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+        <ul class="nav nav-pills nav-stacked" style="border-right:1px solid lightblue">
+            <!--<li class="nav-header"></li>-->
+            <li><a id= "new-reim-request"><i class="fa fa-tags"></i> Create New Reimbursement Request</a></li>
+            <li><a id = "logout-again"><i class="fa fa-lock"></i> Logout</a></li>
+        </ul>
+    </div><!-- /span-3 -->
+    <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
+        <!-- Right -->
+        <a href="#"><strong><span class="fa fa-dashboard"></span> My Dashboard</strong></a>
+        <hr>
+        <div class="container">
+            <div class="row">
+                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Reimbursement ID</th>
+                            <th>Amount</th>
+                            <th>Date Submitted</th>
+                            <th>Resolved</th>
+                            <th>Description</th>
+                            <th>Reimbursement Status</th>
+                            <th>Reimbursement Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12345</td>
+                            <td>12345</td>
+                            <td>2019-03-02</td>
+                            <td>2019-03-02</td>
+                            <td>Chicken</td>
+                            <td><span class="label label-sm label-warning"> Pending </span></td>
+                            <td>food</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
