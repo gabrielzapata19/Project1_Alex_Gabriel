@@ -46,15 +46,16 @@ public class UserServlet extends HttpServlet {
 			if(requestURI.equals("/project_one_alex_gabriel/users") || requestURI.equals("/project_one_alex_gabriel/users/")) {
 				
 				if (!principal.getRole().equalsIgnoreCase("manager")) {
-					log.warn("Unauthorized access attempt made from origin: " + req.getLocalAddr());
-					resp.setStatus(401);
-					return;
+					User user = userService.getById(Integer.parseInt(principal.getId()));
+					String userJSON = mapper.writeValueAsString(user);
+					resp.setStatus(200);
+					out.write(userJSON);
+				} else {
+					List<User> users = userService.getAll();
+					String usersJSON = mapper.writeValueAsString(users);
+					resp.setStatus(200);
+					out.write(usersJSON);
 				}
-				
-				List<User> users = userService.getAll();
-				String usersJSON = mapper.writeValueAsString(users);
-				resp.setStatus(200);
-				out.write(usersJSON);
 				
 			} else if (requestURI.contains("users/")) {
 				

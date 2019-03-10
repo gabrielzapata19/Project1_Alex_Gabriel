@@ -70,7 +70,7 @@ public class ReimbursementDAO implements DAO<Reimbursement> {
 		
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()) {
 			
-			String sql = "SELECT * FROM ers_reimbursement FULL OUTER JOIN ers_reimbursement_status USING (reimb_status_id) FULL OUTER JOIN ers_reimbursement_type USING (reimb_type_id) JOIN ers_users ON ers_reimbursement.reimb_author = ers_users.ers_users_id WHERE reimb_author = ?";
+			String sql = "SELECT * FROM ers_reimbursement FULL OUTER JOIN ers_reimbursement_status USING (reimb_status_id) FULL OUTER JOIN ers_reimbursement_type USING (reimb_type_id) JOIN ers_users ON ers_reimbursement.reimb_author = ers_users.ers_users_id WHERE reimb_author = ? ORDER BY reimb_id DESC";
 			
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 			

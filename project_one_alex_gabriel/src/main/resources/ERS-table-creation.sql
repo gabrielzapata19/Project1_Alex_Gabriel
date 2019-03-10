@@ -160,7 +160,7 @@ BEGIN
     USING (reimb_type_id)
     JOIN ers_users
     ON ers_reimbursement.reimb_author = ers_users.ers_users_id
-    ORDER BY reimb_id;
+    ORDER BY reimb_id DESC;
 END;
 /
 

@@ -1,10 +1,6 @@
+
 window.onload = function() {
-    
-    //yet to be implemented
-    // document.getElementById('to-employee').addEventListener('click', loadEmployee);
-    // document.getElementById('to-manager').addEventListener('click', loadManager);
     loadLogin();
-    
 }
 
 /*
@@ -24,6 +20,7 @@ async function loadLogin() {
 
 function configureLogin() {
     console.log('in configureLogin()');
+    localStorage.clear();
     document.getElementById('alert-msg').hidden = true;
     document.getElementById('submit-creds').addEventListener('click', login);
     document.getElementById('register-button').addEventListener('click', loadRegister);
@@ -47,12 +44,30 @@ async function login() {
     if(response.status == 200) {
         document.getElementById('alert-msg').hidden = true;
         localStorage.setItem('jwt', response.headers.get('Authorization'));
-        loadEmployee();
+        getDashboard();
     } else {
         document.getElementById('alert-msg').hidden = false;
     }
-
 }
+
+async function getDashboard() {
+	
+	let response = await fetch('users',{
+		method: 'GET',
+		mode: 'cors',
+		headers: {
+			'Authorization' : localStorage.getItem('jwt')
+		}	
+	});
+	
+    let results = await response.json();
+
+    if (results.constructor === Array) {
+        loadManager();
+    } else {
+        loadEmployee();
+    }
+} 
 
 //-----------------------------------------------------------------------------------------
 
@@ -74,7 +89,6 @@ async function loadRegister() {
     configureRegister();
 }
 
-//finish implementing functionality for all
 function configureRegister() {
     console.log('in configureRegister()');
     document.getElementById('alert-msg-registration').hidden = true;
@@ -177,7 +191,6 @@ async function register() {
 
 /*
     Employee component
-        - loadEmployee()
  */
 
 async function loadEmployee() {
@@ -197,8 +210,6 @@ function configureEmployee() {
 
 async function getCurrentUserReimRequests() {
 	
-	createResultsContainer();
-	
 	let response = await fetch('reimbursements',{
 		method: 'GET',
 		mode: 'cors',
@@ -210,17 +221,190 @@ async function getCurrentUserReimRequests() {
 	
 	let results = await response.json();
 	console.log(results);
-	return results;
+	createResultsContainer(results);
 } 
 
-function createResultsContainer() {
-	console.log('in createResultsContainer');
+function createResultsContainer(results) {
+    console.log('in createResultsContainer');
+    
+    for(let i=0; i < results.length; i++) {
+
+        let row = document.createElement('tr');
+        let reimbIdCell = document.createElement('td');
+        let amountCell = document.createElement('td');
+        let submittedCell = document.createElement('td');
+        let resolvedCell = document.createElement('td');
+        let descriptionCell = document.createElement('td');
+        let statusCell = document.createElement('td');
+        let typeCell = document.createElement('td');
+
+        row.appendChild(reimbIdCell);
+        row.appendChild(amountCell);
+        row.appendChild(submittedCell);
+        row.appendChild(resolvedCell);
+        row.appendChild(descriptionCell);
+        row.appendChild(statusCell);
+        row.appendChild(typeCell);
+
+        document.getElementById('employee-reimbursements').appendChild(row);
+
+        reimbIdCell.innerText = results[i].id;
+        amountCell.innerText = results[i].amount;
+        submittedCell.innerText = results[i].submitted;
+        if(results[i].resolved == null) {
+            resolvedCell.innerText = 'pending';
+        } else {
+            resolvedCell.innerText = results[i].resolved;
+        }
+        descriptionCell.innerText = results[i].description;
+        statusCell.innerText = results[i].reimbStatus.reimbStatusName;
+        typeCell.innerText = results[i].reimbType.reimbTypeName;
+    }
 }
 
 function loadReimbursement() {
 	console.log('in loadReimbursement');
 }
 
+/*
+    Manager component
+ */
+
+async function loadManager() {
+    console.log('in loadManager()');
+    APP_VIEW.innerHTML = await fetchView('manager.view');
+    DYNAMIC_CSS_LINK.href = 'css/manager.css';
+    getAllReimRequests();
+    configureManager();
+}
+
+function configureManager() {
+    console.log('in configureManager()');
+    document.getElementById('view-all').addEventListener('click', loadManager);
+    document.getElementById('view-by-employee').addEventListener('click', viewByEmployee);
+    document.getElementById('new-reim-request').addEventListener('click',loadReimbursement);
+    document.getElementById('logout').addEventListener('click', loadLogin);
+    document.getElementById('logout-again').addEventListener('click', loadLogin);
+}
+
+async function getAllReimRequests() {
+	
+	let response = await fetch('reimbursements',{
+		method: 'GET',
+		mode: 'cors',
+		headers: {
+			'Authorization' : localStorage.getItem('jwt')
+		}
+		
+	});
+	
+	let results = await response.json();
+    console.log(results);
+    
+    getUsersInfo(results);
+} 
+
+async function getUsersInfo(results) {
+	
+    let response = await fetch('users',{
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+            'Authorization' : localStorage.getItem('jwt')
+        }	
+    });
+    
+    let resultsTwo = await response.json();
+    console.log(resultsTwo);
+
+    createResultsContainerTwo(results, resultsTwo);
+}	
+
+function createResultsContainerTwo(results, resultsTwo) {
+    console.log('in createResultsContainer');
+    
+    for(let i=0; i < results.length; i++) {
+
+        let row = document.createElement('tr');
+        let reimbIdCell = document.createElement('td');
+        let firstNameCell = document.createElement('td');
+        let lastNameCell = document.createElement('td');
+        let amountCell = document.createElement('td');
+        let submittedCell = document.createElement('td');
+        let resolvedCell = document.createElement('td');
+        let descriptionCell = document.createElement('td');
+        let authorCell = document.createElement('td');
+        let resolverCell = document.createElement('td');
+        let statusCell = document.createElement('td');
+        let typeCell = document.createElement('td');
+        let approveCell = document.createElement('td');
+        let denyCell = document.createElement('td');
+
+        row.appendChild(reimbIdCell);
+        row.appendChild(firstNameCell);
+        row.appendChild(lastNameCell);
+        row.appendChild(amountCell);
+        row.appendChild(submittedCell);
+        row.appendChild(resolvedCell);
+        row.appendChild(descriptionCell);
+        row.appendChild(authorCell);
+        row.appendChild(resolverCell);
+        row.appendChild(statusCell);
+        row.appendChild(typeCell);
+        row.appendChild(approveCell);
+        row.appendChild(denyCell);
+
+        document.getElementById('employee-reimbursements').appendChild(row);
+
+        reimbIdCell.innerText = results[i].id;
+        for(let j=0; j < resultsTwo.length; j++) {
+            if(resultsTwo[j].id == results[i].author) {
+                firstNameCell.innerText = resultsTwo[j].firstName;
+                lastNameCell.innerText = resultsTwo[j].lastName;
+            }
+        }
+        amountCell.innerText = results[i].amount;
+        submittedCell.innerText = results[i].submitted;
+        if(results[i].resolved == null) {
+            resolvedCell.innerText = 'pending';
+        } else {
+            resolvedCell.innerText = results[i].resolved;
+        }
+        descriptionCell.innerText = results[i].description;
+        authorCell.innerText = results[i].author;
+        if(results[i].resolver > 0) {
+            resolverCell.innerText = results[i].resolver;
+        } else {
+            resolverCell.innerText = 'pending';
+        }
+        statusCell.innerText = results[i].reimbStatus.reimbStatusName;
+        typeCell.innerText = results[i].reimbType.reimbTypeName;
+
+        if(results[i].reimbStatus.reimbStatusName == 'pending') {
+        
+            approveCell.innerHTML = `<button id="approve-button${i}" class="btn btn-primary">Approve</button>`;
+            denyCell.innerHTML = `<button id="deny-button${i}" class="btn btn-primary">Deny</button>`;
+            document.getElementById(`approve-button${i}`).addEventListener('click', approveReimbursementRequest);
+            document.getElementById(`deny-button${i}`).addEventListener('click', denyReimbursementRequest);
+        }
+    }
+}
+
+function approveReimbursementRequest() {
+    console.log('in approveReimbursementRequest()');
+}
+
+function denyReimbursementRequest() {
+    console.log('in denyReimbursementRequest()');
+}
+
+function viewByEmployee() {
+    console.log('in viewByEmployee()')
+}
+
+function loadReimbursement() {
+	console.log('in loadReimbursement()');
+}
 
 //-------------------------------------------------------------------------------------
 async function fetchView(uri) {
