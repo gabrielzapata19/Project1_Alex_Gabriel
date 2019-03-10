@@ -184,12 +184,43 @@ async function loadEmployee() {
     console.log('in loadEmployee()');
     APP_VIEW.innerHTML = await fetchView('employee.view');
     DYNAMIC_CSS_LINK.href = 'css/employee.css';
+    getCurrentUserReimRequests();
     configureEmployee();
 }
 
 function configureEmployee() {
     console.log('in configureEmployee()');
+    document.getElementById('new-reim-request').addEventListener('click',loadReimbursement);
+    document.getElementById('logout').addEventListener('click', loadLogin);
+    document.getElementById('logout-again').addEventListener('click', loadLogin);
 }
+
+async function getCurrentUserReimRequests() {
+	
+	createResultsContainer();
+	
+	let response = await fetch('reimbursements',{
+		method: 'GET',
+		mode: 'cors',
+		headers: {
+			'Authorization' : localStorage.getItem('jwt')
+		}
+		
+	});
+	
+	let results = await response.json();
+	console.log(results);
+	return results;
+} 
+
+function createResultsContainer() {
+	console.log('in createResultsContainer');
+}
+
+function loadReimbursement() {
+	console.log('in loadReimbursement');
+}
+
 
 //-------------------------------------------------------------------------------------
 async function fetchView(uri) {
