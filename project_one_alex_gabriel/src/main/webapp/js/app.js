@@ -322,31 +322,32 @@ function createResultsContainerTwo(results, resultsTwo) {
     for(let i=0; i < results.length; i++) {
 
         let row = document.createElement('tr');
-        row.innerHTML = `<tr id = table-row${i}></tr>`;
+        row.setAttribute('id', `table-row${i}`);
         document.getElementById(`table-row${i}`);
 
         let reimbIdCell = document.createElement('td');
-        reimbIdCell.innerHTML = `<tr id = reimb-id-cell${i}></tr>`;
+        reimbIdCell.setAttribute('id', `reimb-id-cell${i}`);
         document.getElementById(`reimb-id-cell${i}`);
+
         let firstNameCell = document.createElement('td');
         let lastNameCell = document.createElement('td');
         let amountCell = document.createElement('td');
-        amountCell.innerHTML = `<tr id = amount-cell${i}></tr>`;
+        amountCell.setAttribute('id', `amount-cell${i}`);
         document.getElementById(`amount-cell${i}`);
         let submittedCell = document.createElement('td');
-        submittedCell.innerHTML = `<tr id = submitted-cell${i}></tr>`;
+        submittedCell.setAttribute('id', `submitted-cell${i}`);
         document.getElementById(`submitted-cell${i}`);
         let resolvedCell = document.createElement('td');
         let descriptionCell = document.createElement('td');
-        descriptionCell.innerHTML = `<tr id = description-cell${i}></tr>`;
+        descriptionCell.setAttribute('id', `description-cell${i}`);
         document.getElementById(`description-cell${i}`);
         let authorCell = document.createElement('td');
-        authorCell.innerHTML = `<tr id = author-cell${i}></tr>`;
+        authorCell.setAttribute('id', `author-cell${i}`);
         document.getElementById(`author-cell${i}`);
         let resolverCell = document.createElement('td');
         let statusCell = document.createElement('td');
         let typeCell = document.createElement('td');
-        typeCell.innerHTML = `<tr id = type-cell${i}></tr>`;
+        typeCell.setAttribute('id', `type-cell${i}`);
         document.getElementById(`type-cell${i}`);
         let approveCell = document.createElement('td');
         let denyCell = document.createElement('td');
@@ -396,29 +397,31 @@ function createResultsContainerTwo(results, resultsTwo) {
             approveCell.innerHTML = `<button id="approve-button${i}" class="btn btn-primary">Approve</button>`;
             denyCell.innerHTML = `<button id="deny-button${i}" class="btn btn-primary">Deny</button>`;
             document.getElementById(`approve-button${i}`).onclick = function() {
-                    document.getElementById(`approve-button${i}`).disabled = true;
-                    document.getElementById(`deny-button${i}`).disabled = true;
-                    approveReimbursementRequest(
+                document.getElementById(`approve-button${i}`).disabled = true;
+                document.getElementById(`deny-button${i}`).disabled = true;
+                
+                approveReimbursementRequest(
                     document.getElementById(`table-row${i}`), 
-                    document.getElementById(`reimb-id-cell${i}`), 
-                    document.getElementById(`amount-cell${i}`), 
-                    document.getElementById(`submitted-cell${i}`), 
-                    document.getElementById(`description-cell${i}`),
-                    document.getElementById(`author-cell${i}`),
-                    document.getElementById(`type-cell${i}`)
+                    document.getElementById(`reimb-id-cell${i}`).innerText, 
+                    document.getElementById(`amount-cell${i}`).innerText, 
+                    document.getElementById(`submitted-cell${i}`).innerText, 
+                    document.getElementById(`description-cell${i}`).innerText,
+                    document.getElementById(`author-cell${i}`).innerText,
+                    document.getElementById(`type-cell${i}`).innerText
                 );
             }
             document.getElementById(`deny-button${i}`).onclick = function() {
                 document.getElementById(`approve-button${i}`).disabled = true;
                 document.getElementById(`deny-button${i}`).disabled = true;
+
                 denyReimbursementRequest(
                     document.getElementById(`table-row${i}`), 
-                    document.getElementById(`reimb-id-cell${i}`), 
-                    document.getElementById(`amount-cell${i}`), 
-                    document.getElementById(`submitted-cell${i}`), 
-                    document.getElementById(`description-cell${i}`),
-                    document.getElementById(`author-cell${i}`),
-                    document.getElementById(`type-cell${i}`)
+                    document.getElementById(`reimb-id-cell${i}`).innerText, 
+                    document.getElementById(`amount-cell${i}`).innerText, 
+                    document.getElementById(`submitted-cell${i}`).innerText, 
+                    document.getElementById(`description-cell${i}`).innerText,
+                    document.getElementById(`author-cell${i}`).innerText,
+                    document.getElementById(`type-cell${i}`).innerText
                 );
             }
         }
@@ -543,20 +546,21 @@ async function loadReimbursement() {
 async function approveReimbursementRequest() {
     console.log('in approveReimbursementRequest()');
 
-    
+    let rowCount = document.getElementById('employee-reimbursements').childElementCount;
 
-    document.getElementById(`table-row${i}`), 
-    document.getElementById(`reimb-id-cell${i}`), 
-    document.getElementById(`amount-cell${i}`), 
-    document.getElementById(`submitted-cell${i}`), 
-    document.getElementById(`description-cell${i}`),
-    document.getElementById(`author-cell${i}`),
-    document.getElementById(`type-cell${i}`)
-    
-    
+    for(let i=0; i < rowCount; i++) {
+        console.log( 
+            document.getElementById(`reimb-id-cell${i}`).innerText, 
+            document.getElementById(`amount-cell${i}`).innerText, 
+            document.getElementById(`submitted-cell${i}`).innerText, 
+            document.getElementById(`description-cell${i}`).innerText,
+            document.getElementById(`author-cell${i}`).innerText,
+            document.getElementById(`type-cell${i}`).innerText
+        )
+    }
 }
 
-function denyReimbursementRequest(row, reimbIdCell, amountCell, submittedCell, descriptionCell, authorCell, typeCell, approveCell, denyCell) {
+function denyReimbursementRequest() {
     console.log('in denyReimbursementRequest()');
 }
 
