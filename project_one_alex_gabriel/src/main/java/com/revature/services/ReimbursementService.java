@@ -27,9 +27,9 @@ public class ReimbursementService {
 	
 	public Reimbursement add(Reimbursement newReimbursement) {
 		//check if all fields are not empty, except for receipt
-		if(newReimbursement.getId() == 0 || newReimbursement.getAmount() == 0 || newReimbursement.getSubmitted().equals("") 
-				|| newReimbursement.getResolved().equals("") || newReimbursement.getDescription().equals("") || newReimbursement.getAuthor() == 0
-				|| newReimbursement.getResolver() == 0 || newReimbursement.getReimbStatus().equals(null) || newReimbursement.getReimbType().equals(null)) {
+		if(newReimbursement.getAmount() == 0 || newReimbursement.getSubmitted().equals("") 
+				|| newReimbursement.getDescription().equals("") || newReimbursement.getAuthor() == 0
+				|| newReimbursement.getReimbStatus().equals(null) || newReimbursement.getReimbType().equals(null)) {
 			log.info("New Reimbursement has empty fields!");
 			return null;
 		}
