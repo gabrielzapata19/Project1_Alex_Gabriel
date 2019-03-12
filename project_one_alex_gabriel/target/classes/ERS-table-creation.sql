@@ -134,14 +134,14 @@ INSERT INTO ers_users VALUES (0, 'KingInTheNorth', 'knowsnothing', 'Jon', 'Snow'
 INSERT INTO ers_users VALUES (0, 'StanDarsh', 'asdf', 'Stan', 'Marsh', 'morelikeStanDarsh@gmail.com', 2);
 INSERT INTO ers_users VALUES (0, 'SlimJimTim', 'asdf', 'Jim', 'Tim', 'slimjimtim@gmail.com', 1);
 
-INSERT INTO ers_reimbursement VALUES (0, 50, '2019-03-01', '2019-03-01', 'I had a steak dinner. Sue me.', null, 1, 2, 3, 3);
-INSERT INTO ers_reimbursement VALUES (0, 300, '2019-03-01', '2019-03-01', 'I flew to a place and back.', null, 1, 2, 2, 2);
-INSERT INTO ers_reimbursement VALUES (0, 80, '2019-03-01', '2019-03-02', 'I rode to the Wall because Winter is coming!', null, 3, 2, 3, 2);
-INSERT INTO ers_reimbursement VALUES (0, 200, '2019-03-02', '2019-03-02', 'I stayed in a hotel.', null, 4, 2, 2, 1);
-INSERT INTO ers_reimbursement VALUES (0, 65, '2019-03-02', '2019-03-03', 'I stayed in a motel.', null, 5, 2, 2, 1);
-INSERT INTO ers_reimbursement VALUES (0, 116, '2019-03-03', null, 'I stayed in a Holiday Inn.', null, 1, null, 1, 1);
-INSERT INTO ers_reimbursement VALUES (0, 10000, '2019-03-03', null, 'I was stabbed to death and had to be resurrected.', null, 3, null, 1, 4);
-INSERT INTO ers_reimbursement VALUES (0, 55, '2019-03-03', null, 'Steak again.', null, 1, null, 1, 3);
+INSERT INTO ers_reimbursement VALUES (0, 50, '2019-3-1 9:29:18', '2019-03-01 11:17:46', 'I had a steak dinner. Sue me.', null, 1, 2, 3, 3);
+INSERT INTO ers_reimbursement VALUES (0, 300, '2019-3-1 10:15:16', '2019-03-01 11:58:35', 'I flew to a place and back.', null, 1, 2, 2, 2);
+INSERT INTO ers_reimbursement VALUES (0, 80, '2019-3-1 12:16:23', '2019-03-02 16:43:10', 'I rode to the Wall because Winter is coming!', null, 3, 2, 3, 2);
+INSERT INTO ers_reimbursement VALUES (0, 200, '2019-3-2 10:33:25', '2019-03-02 14:30:14', 'I stayed in a hotel.', null, 4, 2, 2, 1);
+INSERT INTO ers_reimbursement VALUES (0, 65, '2019-3-2 9:27:20', '2019-03-03 12:20:23', 'I stayed in a motel.', null, 5, 2, 2, 1);
+INSERT INTO ers_reimbursement VALUES (0, 116, '2019-3-3 11:12:36', null, 'I stayed in a Holiday Inn.', null, 1, null, 1, 1);
+INSERT INTO ers_reimbursement VALUES (0, 10000, '2019-3-3 9:15:12', null, 'I was stabbed to death and had to be resurrected.', null, 3, null, 1, 4);
+INSERT INTO ers_reimbursement VALUES (0, 55, '2019-3-3 9:47:45', null, 'Steak again.', null, 1, null, 1, 3);
 
 commit; 
 
