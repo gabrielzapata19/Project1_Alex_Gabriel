@@ -1,0 +1,52 @@
+<div class="cotainer">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Create New Reimbursement</div>
+                <div class="card-body">
+
+                    <div class="form-group row">
+                        
+                        <label for="Amount">Amount</label>
+                        <input type="text" class="form-control" class="col-md-4 col-form-label text-md-right" id="reim-amount"
+                            name="amount" placeholder="Enter total expenses for this request.">
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="reim-description" name="description" rows="5" placeholder="Please describe expenses in 10 to 250 characters."></textarea>
+                    </div>
+                    <hr />
+                    <div class="form-group row">
+                        
+                        <label for="type">Type of Expense</label>
+                        <select class="form-control" class="col-md-4 col-form-label text-md-right" id="reim-type"
+                            name="type">
+                            <option value="lodging">Lodging</option>
+                            <option value="travel">Travel</option>
+                            <option value="food">Food</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <hr />
+                    <div class="col-md-6 offset-md-4">
+                        <button id="register-reimbursement" class="btn btn-primary">
+                            Submit New Reimbursement Request
+                        </button>
+                    </div>
+
+                    <div>
+                        <div class="alert alert-danger text-center" id="alert-msg-reimbursement" role="alert">
+                            Please fill all fields.
+                        </div>
+                        <div class="text-center" id="reimbursement-success" role="alert">
+                            Submission successful. Redirecting to your Dashboard.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

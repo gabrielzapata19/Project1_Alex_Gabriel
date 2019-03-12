@@ -262,10 +262,6 @@ function createResultsContainer(results) {
     }
 }
 
-function loadReimbursement() {
-	console.log('in loadReimbursement');
-}
-
 /*
     Manager component
  */
@@ -280,7 +276,7 @@ async function loadManager() {
 
 function configureManager() {
     console.log('in configureManager()');
-    document.getElementById('view-all').addEventListener('click', loadManager);
+    document.getElementById('view-all').addEventListener('click', getDashboard);
     document.getElementById('view-by-employee').addEventListener('click', viewByEmployee);
     document.getElementById('new-reim-request').addEventListener('click',loadReimbursement);
     document.getElementById('logout').addEventListener('click', loadLogin);
@@ -390,6 +386,121 @@ function createResultsContainerTwo(results, resultsTwo) {
     }
 }
 
+//------------------------------------------------------------------------------------
+//New Reimbursement component
+
+async function loadReimbursement() {
+    console.log('in loadReimbursement');
+ 
+     APP_VIEW.innerHTML = await fetchView('reimbursement.view');
+     DYNAMIC_CSS_LINK.href = 'css/reimbursement.css';
+     configureReimbursement();
+ }
+ 
+ function configureReimbursement() {
+     console.log('in configureReimbursement()');
+ 
+     document.getElementById('alert-msg-reimbursement').hidden = true;
+     document.getElementById('reimbursement-success').hidden = true;
+     document.getElementById('reim-amount').addEventListener('blur', validateAmount);
+     document.getElementById('reim-description').addEventListener('blur', validateDescription);
+     document.getElementById('register-reimbursement').addEventListener('click', newReimbursement);
+ 
+     document.getElementById('reim-description').disabled = true;
+     document.getElementById('register-reimbursement').disabled = true;
+ }
+ 
+ 
+ function validateAmount(event) {
+     if ((/^\s*-?\d+(\.\d{1,2})?\s*$/).test(event.target.value) && 1 < event.target.value.length && event.target.value.length < 8 ) {
+         document.getElementById('reim-description').disabled = false;
+     } else {
+        document.getElementById('register-reimbursement').disabled = true;
+     } 
+ }
+ 
+ function validateDescription(event) {
+     if (10 < event.target.value.length && event.target.value.length < 250) {
+         document.getElementById('register-reimbursement').disabled = false; 
+     } else {
+        document.getElementById('register-reimbursement').disabled = true;
+     }
+ }
+ 
+ async function newReimbursement() {
+     console.log('in newReimbursement()');
+ 
+     let today = new Date();
+     let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+     let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+     let dateTime = date+' '+time;
+
+     let reimbTypeElement = document.getElementById('reim-type');
+     let reimbursementType = reimbTypeElement.options[reimbTypeElement.selectedIndex].value;
+     let reimbursementTypeId = 0;
+     switch(reimbursementType){
+         case "lodging":
+         reimbursementTypeId = 1;
+         break;
+         case "travel":
+         reimbursementTypeId = 2;
+         break;
+         case "food":
+         reimbursementTypeId = 3;
+         break;
+         case "other":
+         reimbursementTypeId = 4;
+         break;
+     }
+ 
+     let newReim = {
+         id: 0,
+         amount: document.getElementById('reim-amount').value,
+         submitted: dateTime,
+         resolved: '',
+         description: document.getElementById('reim-description').value,
+         receipt: null,
+         author: 0,
+         resolver: 0,
+         reimbStatus: 
+         {
+            reimbStatusId: '1',
+            reimbStatusName: 'pending'
+         },
+         reimbType:
+         {
+            reimbTypeId: `${reimbursementTypeId}`,
+            reimbTypeName: `${reimbursementType}`
+         }
+
+     };
+
+     console.log(JSON.stringify(newReim));
+
+     let response = await fetch('reimbursements', {
+         method: 'POST',
+         mode: 'cors',
+         headers: {
+            'Authorization' : localStorage.getItem('jwt')
+         },
+         body: JSON.stringify(newReim)
+     });
+ 
+     let responseBody = await response.json();
+ 
+     if (responseBody != null) {
+ 
+         document.getElementById('alert-msg-reimbursement').hidden = true;
+         document.getElementById('reimbursement-success').hidden = false;
+         setTimeout(getDashboard, 3000);
+ 
+     } else {
+         document.getElementById('alert-msg-reimbursement').hidden = false;
+     }
+ }
+
+
+//Updating reimbursements
 function approveReimbursementRequest() {
     console.log('in approveReimbursementRequest()');
 }
@@ -400,10 +511,6 @@ function denyReimbursementRequest() {
 
 function viewByEmployee() {
     console.log('in viewByEmployee()')
-}
-
-function loadReimbursement() {
-	console.log('in loadReimbursement()');
 }
 
 //-------------------------------------------------------------------------------------
