@@ -69,10 +69,8 @@ public class ReimbursementServlet extends HttpServlet {
         log.info("Request received by ReimbursementServlet.doPost()");
         Reimbursement someReimbursement = null;
         
-        //add the Author by the principal
         resp.setContentType("application/json");
         Principal principal = (Principal) req.getAttribute("principal");
-        
         
         ObjectMapper mapper = new ObjectMapper();
         
@@ -88,12 +86,15 @@ public class ReimbursementServlet extends HttpServlet {
             return;
         }
         
-        //set author from the principal i.e the current user's id
-        someReimbursement.setAuthor(Integer.parseInt(principal.getId()));
-        
         if(someReimbursement.getReimbStatus().getReimbStatusName().equals("pending")) {
-            someReimbursement = reimService.add(someReimbursement);
+            
+        	someReimbursement.setAuthor(Integer.parseInt(principal.getId()));
+        	
+        	someReimbursement = reimService.add(someReimbursement);
         } else {
+        	
+        	someReimbursement.setResolver(Integer.parseInt(principal.getId()));
+        	
             someReimbursement = reimService.update(someReimbursement);
         }
         

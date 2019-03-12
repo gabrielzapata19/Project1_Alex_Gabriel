@@ -39,13 +39,13 @@ public class ReimbursementService {
 	public Reimbursement update(Reimbursement updatedReimbursement) {
 		
 		//check if all fields are not empty, except for receipt
-		if(updatedReimbursement.getId() == 0 || updatedReimbursement.getAmount() == 0 || updatedReimbursement.getSubmitted().equals("") 
+		if(updatedReimbursement.getAmount() == 0 || updatedReimbursement.getSubmitted().equals("") 
 				|| updatedReimbursement.getResolved().equals("") || updatedReimbursement.getDescription().equals("") || updatedReimbursement.getAuthor() == 0
 				|| updatedReimbursement.getResolver() == 0 || updatedReimbursement.getReimbStatus().equals(null) || updatedReimbursement.getReimbType().equals(null)) {
 			log.info("Updated Reimbursement has empty fields!");
 			return null;
 		}
-		
+			
 		//make sure finance manager cannot approve/deny their own requests
 		if(updatedReimbursement.getResolver() == updatedReimbursement.getAuthor()) {
 			log.warn("Finance Manager unauthorized to approve/deny own reimbursement request!");
