@@ -400,29 +400,28 @@ function createResultsContainerTwo(results, resultsTwo) {
                 document.getElementById(`approve-button${i}`).disabled = true;
                 document.getElementById(`deny-button${i}`).disabled = true;
                 
-                approveReimbursementRequest(
-                    document.getElementById(`table-row${i}`), 
-                    document.getElementById(`reimb-id-cell${i}`).innerText, 
-                    document.getElementById(`amount-cell${i}`).innerText, 
-                    document.getElementById(`submitted-cell${i}`).innerText, 
-                    document.getElementById(`description-cell${i}`).innerText,
-                    document.getElementById(`author-cell${i}`).innerText,
-                    document.getElementById(`type-cell${i}`).innerText
-                );
+                let reimbId = document.getElementById(`reimb-id-cell${i}`).innerText;
+                let amount = document.getElementById(`amount-cell${i}`).innerText;
+                let submitted = document.getElementById(`submitted-cell${i}`).innerText;
+                let description = document.getElementById(`description-cell${i}`).innerText;
+                let author = document.getElementById(`author-cell${i}`).innerText;
+                let type = document.getElementById(`type-cell${i}`).innerText;
+
+                approveReimbursementRequest(reimbId, amount, submitted, description, author, type);
             }
+            
             document.getElementById(`deny-button${i}`).onclick = function() {
                 document.getElementById(`approve-button${i}`).disabled = true;
                 document.getElementById(`deny-button${i}`).disabled = true;
 
-                denyReimbursementRequest(
-                    document.getElementById(`table-row${i}`), 
-                    document.getElementById(`reimb-id-cell${i}`).innerText, 
-                    document.getElementById(`amount-cell${i}`).innerText, 
-                    document.getElementById(`submitted-cell${i}`).innerText, 
-                    document.getElementById(`description-cell${i}`).innerText,
-                    document.getElementById(`author-cell${i}`).innerText,
-                    document.getElementById(`type-cell${i}`).innerText
-                );
+                let reimbId = document.getElementById(`reimb-id-cell${i}`).innerText;
+                let amount = document.getElementById(`amount-cell${i}`).innerText;
+                let submitted = document.getElementById(`submitted-cell${i}`).innerText;
+                let description = document.getElementById(`description-cell${i}`).innerText;
+                let author = document.getElementById(`author-cell${i}`).innerText;
+                let type = document.getElementById(`type-cell${i}`).innerText;
+
+                denyReimbursementRequest(reimbId, amount, submitted, description, author, type);
             }
         }
     }
@@ -543,25 +542,126 @@ async function loadReimbursement() {
 
 
 //Updating reimbursements
-async function approveReimbursementRequest() {
+async function approveReimbursementRequest(reimbId, amount, submitted, description, author, type) {
     console.log('in approveReimbursementRequest()');
 
-    let rowCount = document.getElementById('employee-reimbursements').childElementCount;
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let dateTime = date+' '+time;
 
-    for(let i=0; i < rowCount; i++) {
-        console.log( 
-            document.getElementById(`reimb-id-cell${i}`).innerText, 
-            document.getElementById(`amount-cell${i}`).innerText, 
-            document.getElementById(`submitted-cell${i}`).innerText, 
-            document.getElementById(`description-cell${i}`).innerText,
-            document.getElementById(`author-cell${i}`).innerText,
-            document.getElementById(`type-cell${i}`).innerText
-        )
+    let reimbursementTypeId = 0;
+    switch(type){
+        case "lodging":
+        reimbursementTypeId = 1;
+        break;
+        case "travel":
+        reimbursementTypeId = 2;
+        break;
+        case "food":
+        reimbursementTypeId = 3;
+        break;
+        case "other":
+        reimbursementTypeId = 4;
+        break;
     }
+
+    let updatedReim = {
+        id: reimbId,
+        amount: amount,
+        submitted: submitted,
+        resolved: dateTime,
+        description: description,
+        receipt: null,
+        author: author,
+        resolver: 0,
+        reimbStatus: 
+        {
+           reimbStatusId: '2',
+           reimbStatusName: 'approved'
+        },
+        reimbType:
+        {
+           reimbTypeId: `${reimbursementTypeId}`,
+           reimbTypeName: `${type}`
+        }
+
+    };
+
+    console.log(JSON.stringify(updatedReim));
+
+    let response = await fetch('reimbursements', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+           'Authorization' : localStorage.getItem('jwt')
+        },
+        body: JSON.stringify(updatedReim)
+    });
+
+    let responseBody = await response.json();
+    return responseBody;
 }
 
-function denyReimbursementRequest() {
+async function denyReimbursementRequest(reimbId, amount, submitted, description, author, type) {
     console.log('in denyReimbursementRequest()');
+
+    let today = new Date();
+    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    let dateTime = date+' '+time;
+
+    let reimbursementTypeId = 0;
+    switch(type){
+        case "lodging":
+        reimbursementTypeId = 1;
+        break;
+        case "travel":
+        reimbursementTypeId = 2;
+        break;
+        case "food":
+        reimbursementTypeId = 3;
+        break;
+        case "other":
+        reimbursementTypeId = 4;
+        break;
+    }
+
+    let updatedReim = {
+        id: reimbId,
+        amount: amount,
+        submitted: submitted,
+        resolved: dateTime,
+        description: description,
+        receipt: null,
+        author: author,
+        resolver: 0,
+        reimbStatus: 
+        {
+           reimbStatusId: '3',
+           reimbStatusName: 'denied'
+        },
+        reimbType:
+        {
+           reimbTypeId: `${reimbursementTypeId}`,
+           reimbTypeName: `${type}`
+        }
+
+    };
+
+    console.log(JSON.stringify(updatedReim));
+
+    let response = await fetch('reimbursements', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+           'Authorization' : localStorage.getItem('jwt')
+        },
+        body: JSON.stringify(updatedReim)
+    });
+
+    let responseBody = await response.json();
+    return responseBody;
 }
 
 function viewByEmployee() {
