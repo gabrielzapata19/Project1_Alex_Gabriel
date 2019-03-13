@@ -94,6 +94,7 @@ function configureRegister() {
     document.getElementById('alert-msg-registration').hidden = true;
     document.getElementById('registration-success').hidden = true;
     document.getElementById('register-username').addEventListener('blur', validateUsername);
+    document.getElementById('register-username').addEventListener('blur', checkDuplicateUsername);
     document.getElementById('register-password').addEventListener('blur', validatePassword);
     document.getElementById('register-first-name').addEventListener('blur', validateFirstName);
     document.getElementById('register-last-name').addEventListener('blur', validateLastName);
@@ -115,6 +116,27 @@ function validateUsername(event) {
         document.getElementById('register-password').disabled = false;
     }
 }
+
+// async function checkDuplicateUsername() {
+//     let checkUsername = document.getElementById('register-username').value;
+
+//     let response = await fetch('users', {
+//         method: 'POST',
+//         mode: 'cors',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(checkUsername)
+//     });
+
+//     if(response.status == 200) {
+//         document.getElementById('alert-msg').hidden = true;
+//         localStorage.setItem('jwt', response.headers.get('Authorization'));
+//         getDashboard();
+//     } else {
+//         document.getElementById('alert-msg').hidden = false;
+//     }
+// }
 
 function validatePassword(event) {
 	if(event.target.value.length < 4 ){
@@ -467,7 +489,7 @@ async function loadReimbursement() {
  
  
  function validateAmount(event) {
-     if ((/^\s*-?\d+(\.\d{1,2})?\s*$/).test(event.target.value) && 1 < event.target.value.length && event.target.value.length < 8 ) {
+     if ((/^\s*-?\d+(\.\d{1,2})?\s*$/).test(event.target.value) && 0 < event.target.value.length && event.target.value.length < 8 ) {
          document.getElementById('reim-description').disabled = false;
      } else {
         document.getElementById('register-reimbursement').disabled = true;
@@ -676,10 +698,6 @@ async function denyReimbursementRequest(reimbId, amount, submitted, description,
 
     let responseBody = await response.json();
     return responseBody;
-}
-
-function viewByStatus() {
-    console.log('in viewByEmployee()')
 }
 
 //-------------------------------------------------------------------------------------
