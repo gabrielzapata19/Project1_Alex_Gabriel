@@ -277,7 +277,6 @@ async function loadManager() {
 function configureManager() {
     console.log('in configureManager()');
     document.getElementById('view-all').addEventListener('click', getDashboard);
-    document.getElementById('view-by-employee').addEventListener('click', viewByEmployee);
     document.getElementById('new-reim-request').addEventListener('click',loadReimbursement);
     document.getElementById('logout').addEventListener('click', loadLogin);
     document.getElementById('logout-again').addEventListener('click', loadLogin);
@@ -322,8 +321,6 @@ function createResultsContainerTwo(results, resultsTwo) {
     for(let i=0; i < results.length; i++) {
 
         let row = document.createElement('tr');
-        row.setAttribute('id', `table-row${i}`);
-        document.getElementById(`table-row${i}`);
 
         let reimbIdCell = document.createElement('td');
         reimbIdCell.setAttribute('id', `reimb-id-cell${i}`);
@@ -422,6 +419,23 @@ function createResultsContainerTwo(results, resultsTwo) {
                 let type = document.getElementById(`type-cell${i}`).innerText;
 
                 denyReimbursementRequest(reimbId, amount, submitted, description, author, type);
+            }
+        }
+
+        document.getElementById('filter-by-status').onclick = function() {
+    
+            let reimbursementStatus = document.getElementById('reim-status');
+            let reimbStatusValue = reimbursementStatus.options[reimbursementStatus.selectedIndex].value;
+            let rowElements = document.getElementsByTagName('tr');
+            for(let j=1; j < rowElements.length; j++) {
+                rowElements[j].setAttribute('id', `table-row${j}`);
+                console.log(document.getElementById(`table-row${j}`));
+
+                if(rowElements[j].cells[9].innerText == reimbStatusValue) {
+                    document.getElementById(`table-row${j}`).hidden = false;
+                } else {
+                    document.getElementById(`table-row${j}`).hidden = true;
+                }
             }
         }
     }
@@ -664,7 +678,7 @@ async function denyReimbursementRequest(reimbId, amount, submitted, description,
     return responseBody;
 }
 
-function viewByEmployee() {
+function viewByStatus() {
     console.log('in viewByEmployee()')
 }
 
