@@ -95,7 +95,6 @@ function configureRegister() {
     document.getElementById('alert-msg-registration').hidden = true;
     document.getElementById('registration-success').hidden = true;
     document.getElementById('register-username').addEventListener('blur', validateUsername);
-    document.getElementById('register-username').addEventListener('blur', checkDuplicateUsername);
     document.getElementById('register-password').addEventListener('blur', validatePassword);
     document.getElementById('register-first-name').addEventListener('blur', validateFirstName);
     document.getElementById('register-last-name').addEventListener('blur', validateLastName);
@@ -130,28 +129,6 @@ function validateUsername(event) {
     else{
         document.getElementById('register-password').disabled = false;
     }
-}
-
-async function checkDuplicateUsername() {
-    console.log('in checkDuplicateUsername()');
-//     let checkUsername = document.getElementById('register-username').value;
-
-//     let response = await fetch('users', {
-//         method: 'POST',
-//         mode: 'cors',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(checkUsername)
-//     });
-
-//     if(response.status == 200) {
-//         document.getElementById('alert-msg').hidden = true;
-//         localStorage.setItem('jwt', response.headers.get('Authorization'));
-//         getDashboard();
-//     } else {
-//         document.getElementById('alert-msg').hidden = false;
-//     }
 }
 
 function validatePassword(event) {
@@ -244,6 +221,11 @@ async function register() {
     });
 
     let responseBody = await response.json();
+
+    if(response.status == 409) {
+        document.getElementById('alert-msg-username').hidden = false;
+        return;
+    }
 
     if(responseBody != null) {
         

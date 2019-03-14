@@ -103,6 +103,14 @@ public class UserServlet extends HttpServlet {
 			resp.setStatus(500);
 			return;
 		}
+			
+		UserService userService = new UserService();
+		List<User> users = userService.getAll();
+		for(User user: users) {
+			if(user.getUsername().equals(newUser.getUsername())) {
+				resp.setStatus(409);
+			}
+		}		
 		
 		newUser = userService.add(newUser);
 		
