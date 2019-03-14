@@ -108,37 +108,4 @@ public class ReimbursementServlet extends HttpServlet {
         }
     }
     
-//    @Override
-//    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-//        log.info("Request received by ReimbursementServlet.doPut()");
-//        Reimbursement updatedReimbursement = null;
-//        
-//        ObjectMapper mapper = new ObjectMapper();
-//        
-//        try {
-//            updatedReimbursement = mapper.readValue(req.getInputStream(), Reimbursement.class);
-//        } catch (MismatchedInputException mie) {
-//            log.error(mie.getMessage());
-//            resp.setStatus(400);
-//            return;
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-//            resp.setStatus(500);
-//            return;
-//        }
-//    
-//        
-//            updatedReimbursement = reimService.update(updatedReimbursement);
-//        
-//        
-//        try {
-//            String userJson = mapper.writeValueAsString(updatedReimbursement);
-//            PrintWriter out = resp.getWriter();
-//            out.write(userJson);
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-//            resp.setStatus(500);
-//        }
-//    }
-    
 }
