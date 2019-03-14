@@ -3,27 +3,47 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 <style>
-        body {
-            font-size: 2rem;
-        }
-        .container {
-            max-width: 100%;
-        }
-        .btn {
-            font-size: 2rem;
-        }
-        .form-control {
-            font-size: 2rem;
-        }
-        .navbar-brand {
-            font-size: 2rem;
-        }
-    select.form-control:not([size]):not([multiple]) {
-            height: calc(2.25rem + 15px);
-        }
-        tr:nth-child(even) {
-        background-color: #f2f2f2
-        }
+body {
+    font-size: 1.75rem;
+}
+.container {
+    max-width: 100%;
+}
+.btn {
+    font-size: 1.75rem;
+}
+.form-control {
+    font-size: 1.75rem;
+}
+.navbar-brand {
+    font-size: 1.75rem;
+}
+select.form-control:not([size]):not([multiple]) {
+    height: calc(2.25rem + 15px);
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+#logout:hover {
+    color: white;
+    transition: all .5s ease;
+    cursor: pointer;
+}
+#view-all:hover {
+    color: darkgreen;
+    transition: all .5s ease;
+    cursor: pointer;
+}
+#new-reim-request:hover {
+    color: darkgreen;
+    transition: all .5s ease;
+    cursor: pointer;
+}
+#logout-again:hover {
+    color: darkgreen;
+    transition: all .5s ease;
+    cursor: pointer;
+}
 </style>
 
 <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
@@ -34,7 +54,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <h5 class="navbar-brand">AGILERS</h5>
+            <h5 class="navbar-brand">Welcome to AGILERS</h5>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -69,7 +89,7 @@
 </div><!-- /span-3 -->
 <div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
     <!-- Right -->
-    <a href="#"><strong><span class="fa fa-dashboard"></span> All Reimbursement Requests</strong></a>
+    <h1><strong><span class="fa fa-dashboard"></span> All Reimbursement Requests</strong></h1>
     <hr>
 
     <div class="container">

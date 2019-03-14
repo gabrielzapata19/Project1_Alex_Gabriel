@@ -38,7 +38,7 @@ public class RequestViewHelper {
 			log.info("Fetching employee.html");
 			return "partials/employee.html";
 		
-		case "/project_one_alex_gabriel/manager.view":
+		case "/project_one_alex_gabriel/managers.view":
 			
 			Principal principalManager = (Principal) request.getAttribute("principal");
 			
@@ -47,8 +47,8 @@ public class RequestViewHelper {
 				return null;
 			}
 			
-			log.info("Fetching manager.html");
-			return "partials/manager.html";
+			log.info("Fetching managers.html");
+			return "partials/managers.html";
 			
 		case "/project_one_alex_gabriel/reimbursement.view":
 			

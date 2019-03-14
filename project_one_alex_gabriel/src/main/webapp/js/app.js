@@ -316,7 +316,7 @@ function createResultsContainer(results) {
 
 async function loadManager() {
     
-    APP_VIEW.innerHTML = await fetchView('manager.view');
+    APP_VIEW.innerHTML = await fetchView('managers.view');
     DYNAMIC_CSS_LINK.href = 'css/manager.css';
     getAllReimRequests();
     configureManager();
