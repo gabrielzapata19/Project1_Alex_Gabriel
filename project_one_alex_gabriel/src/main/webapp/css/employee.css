@@ -1,0 +1,19 @@
+body {
+    font-size: 2rem;
+}
+.container {
+    max-width: 100%;
+}
+.btn {
+    font-size: 2rem;
+}
+.form-control {
+    font-size: 2rem;
+}
+.navbar-brand {
+    font-size: 2rem;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2
+}

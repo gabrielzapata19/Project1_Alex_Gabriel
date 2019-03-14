@@ -1,4 +1,3 @@
-
 window.onload = function() {
     loadLogin();
 }
@@ -11,7 +10,6 @@ window.onload = function() {
 */
 
 async function loadLogin() {
-    console.log('in loadLogin()');
     
     APP_VIEW.innerHTML = await fetchView('login.view');
     DYNAMIC_CSS_LINK.href = 'css/login.css';
@@ -19,7 +17,7 @@ async function loadLogin() {
 }
 
 function configureLogin() {
-    console.log('in configureLogin()');
+
     localStorage.clear();
     document.getElementById('alert-msg').hidden = true;
     document.getElementById('submit-creds').addEventListener('click', login);
@@ -27,7 +25,7 @@ function configureLogin() {
 }
 
 async function login() {
-    console.log('in login()');
+
     let credentials = [];
     credentials.push(document.getElementById('username-cred').value);
     credentials.push(document.getElementById('password-cred').value);
@@ -83,14 +81,14 @@ async function getDashboard() {
 */
 
 async function loadRegister() {
-    console.log('in loadRegister()');
+    
     APP_VIEW.innerHTML = await fetchView('register.view');
     DYNAMIC_CSS_LINK.href = 'css/register.css';
     configureRegister();
 }
 
 function configureRegister() {
-    console.log('in configureRegister()');
+    
     document.getElementById('alert-msg-username').hidden = true;
     document.getElementById('alert-msg-registration').hidden = true;
     document.getElementById('registration-success').hidden = true;
@@ -199,7 +197,6 @@ function undisableRegisterButton() {
 }
 
 async function register() {
-    console.log('in register()');
     
     let newUser = {
         id: 0,
@@ -246,7 +243,7 @@ async function register() {
  */
 
 async function loadEmployee() {
-    console.log('in loadEmployee()');
+    
     APP_VIEW.innerHTML = await fetchView('employee.view');
     DYNAMIC_CSS_LINK.href = 'css/employee.css';
     getCurrentUserReimRequests();
@@ -254,7 +251,7 @@ async function loadEmployee() {
 }
 
 function configureEmployee() {
-    console.log('in configureEmployee()');
+    
     document.getElementById('new-reim-request').addEventListener('click',loadReimbursement);
     document.getElementById('logout').addEventListener('click', loadLogin);
     document.getElementById('logout-again').addEventListener('click', loadLogin);
@@ -272,12 +269,11 @@ async function getCurrentUserReimRequests() {
 	});
 	
 	let results = await response.json();
-	console.log(results);
+	
 	createResultsContainer(results);
 } 
 
 function createResultsContainer(results) {
-    console.log('in createResultsContainer');
     
     for(let i=0; i < results.length; i++) {
 
@@ -319,7 +315,7 @@ function createResultsContainer(results) {
  */
 
 async function loadManager() {
-    console.log('in loadManager()');
+    
     APP_VIEW.innerHTML = await fetchView('manager.view');
     DYNAMIC_CSS_LINK.href = 'css/manager.css';
     getAllReimRequests();
@@ -327,7 +323,7 @@ async function loadManager() {
 }
 
 function configureManager() {
-    console.log('in configureManager()');
+    
     document.getElementById('view-all').addEventListener('click', getDashboard);
     document.getElementById('new-reim-request').addEventListener('click',loadReimbursement);
     document.getElementById('logout').addEventListener('click', loadLogin);
@@ -346,7 +342,6 @@ async function getAllReimRequests() {
 	});
 	
 	let results = await response.json();
-    console.log(results);
     
     getUsersInfo(results);
 } 
@@ -362,13 +357,11 @@ async function getUsersInfo(results) {
     });
     
     let resultsTwo = await response.json();
-    console.log(resultsTwo);
 
     createResultsContainerTwo(results, resultsTwo);
 }	
 
 function createResultsContainerTwo(results, resultsTwo) {
-    console.log('in createResultsContainer');
     
     for(let i=0; i < results.length; i++) {
 
@@ -481,7 +474,6 @@ function createResultsContainerTwo(results, resultsTwo) {
             let rowElements = document.getElementsByTagName('tr');
             for(let j=1; j < rowElements.length; j++) {
                 rowElements[j].setAttribute('id', `table-row${j}`);
-                console.log(document.getElementById(`table-row${j}`));
 
                 if(rowElements[j].cells[9].innerText == reimbStatusValue) {
                     document.getElementById(`table-row${j}`).hidden = false;
@@ -497,7 +489,6 @@ function createResultsContainerTwo(results, resultsTwo) {
 //New Reimbursement component
 
 async function loadReimbursement() {
-    console.log('in loadReimbursement');
  
      APP_VIEW.innerHTML = await fetchView('reimbursement.view');
      DYNAMIC_CSS_LINK.href = 'css/reimbursement.css';
@@ -505,7 +496,6 @@ async function loadReimbursement() {
  }
  
  function configureReimbursement() {
-     console.log('in configureReimbursement()');
  
      document.getElementById('alert-msg-reimbursement').hidden = true;
      document.getElementById('reimbursement-success').hidden = true;
@@ -550,7 +540,6 @@ async function loadReimbursement() {
  }
  
  async function newReimbursement() {
-     console.log('in newReimbursement()');
  
      let today = new Date();
      let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -597,8 +586,6 @@ async function loadReimbursement() {
 
      };
 
-     console.log(JSON.stringify(newReim));
-
      let response = await fetch('reimbursements', {
          method: 'POST',
          mode: 'cors',
@@ -624,7 +611,6 @@ async function loadReimbursement() {
 
 //Updating reimbursements
 async function approveReimbursementRequest(reimbId, amount, submitted, description, author, type) {
-    console.log('in approveReimbursementRequest()');
 
     let today = new Date();
     let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -669,8 +655,6 @@ async function approveReimbursementRequest(reimbId, amount, submitted, descripti
 
     };
 
-    console.log(JSON.stringify(updatedReim));
-
     let response = await fetch('reimbursements', {
         method: 'POST',
         mode: 'cors',
@@ -685,7 +669,6 @@ async function approveReimbursementRequest(reimbId, amount, submitted, descripti
 }
 
 async function denyReimbursementRequest(reimbId, amount, submitted, description, author, type) {
-    console.log('in denyReimbursementRequest()');
 
     let today = new Date();
     let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -729,8 +712,6 @@ async function denyReimbursementRequest(reimbId, amount, submitted, description,
         }
 
     };
-
-    console.log(JSON.stringify(updatedReim));
 
     let response = await fetch('reimbursements', {
         method: 'POST',
