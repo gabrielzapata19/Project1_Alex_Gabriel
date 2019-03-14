@@ -34,7 +34,7 @@ user_role             VARCHAR2(10),
 
 CREATE TABLE ers_users (
 ers_users_id        NUMBER,
-ers_username        VARCHAR2(50),
+ers_username        VARCHAR2(50) UNIQUE NOT NULL,
 ers_password        VARCHAR2(50),
 user_first_name     VARCHAR2(100),
 user_last_name      VARCHAR2(100),
