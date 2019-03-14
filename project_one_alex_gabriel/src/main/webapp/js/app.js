@@ -91,6 +91,7 @@ async function loadRegister() {
 
 function configureRegister() {
     console.log('in configureRegister()');
+    document.getElementById('alert-msg-username').hidden = true;
     document.getElementById('alert-msg-registration').hidden = true;
     document.getElementById('registration-success').hidden = true;
     document.getElementById('register-username').addEventListener('blur', validateUsername);
@@ -99,7 +100,9 @@ function configureRegister() {
     document.getElementById('register-first-name').addEventListener('blur', validateFirstName);
     document.getElementById('register-last-name').addEventListener('blur', validateLastName);
     document.getElementById('register-email').addEventListener('blur', validateEmail);
+    document.getElementById('register-email').addEventListener('input', undisableRegisterButton);
     document.getElementById('register-account').addEventListener('click', register);
+    document.getElementById('back-to-login').addEventListener('click', loadLogin);
     
     document.getElementById('register-password').disabled = true;
     document.getElementById('register-first-name').disabled = true;
@@ -110,6 +113,18 @@ function configureRegister() {
 
 function validateUsername(event) {
 	if(event.target.value.length < 4 ){
+        if(document.getElementById('register-username').value == ''){   
+            document.getElementById('register-password').disabled = true;
+        }    
+        if(document.getElementById('register-password').value == ''){
+            document.getElementById('register-first-name').disabled = true;
+        }
+        if(document.getElementById('register-first-name').value == ''){
+            document.getElementById('register-last-name').disabled = true;
+        }
+        if(document.getElementById('register-last-name').value == ''){
+            document.getElementById('register-email').disabled = true;
+        }
         document.getElementById('register-account').disabled = true;
     }
     else{
@@ -117,7 +132,8 @@ function validateUsername(event) {
     }
 }
 
-// async function checkDuplicateUsername() {
+async function checkDuplicateUsername() {
+    console.log('in checkDuplicateUsername()');
 //     let checkUsername = document.getElementById('register-username').value;
 
 //     let response = await fetch('users', {
@@ -136,10 +152,19 @@ function validateUsername(event) {
 //     } else {
 //         document.getElementById('alert-msg').hidden = false;
 //     }
-// }
+}
 
 function validatePassword(event) {
 	if(event.target.value.length < 4 ){
+        if(document.getElementById('register-password').value == ''){
+            document.getElementById('register-first-name').disabled = true;
+        }
+        if(document.getElementById('register-first-name').value == ''){
+            document.getElementById('register-last-name').disabled = true;
+        }
+        if(document.getElementById('register-last-name').value == ''){
+            document.getElementById('register-email').disabled = true;
+        }
         document.getElementById('register-account').disabled = true;
     }
     else{
@@ -149,7 +174,13 @@ function validatePassword(event) {
 
 function validateFirstName(event) {
 	if(!(/^[a-zA-Z ]+$/.test(event.target.value))){
-		document.getElementById('register-account').disabled = true;
+        if(document.getElementById('register-first-name').value == ''){
+            document.getElementById('register-last-name').disabled = true;
+        }
+        if(document.getElementById('register-last-name').value == ''){
+            document.getElementById('register-email').disabled = true;
+        }
+        document.getElementById('register-account').disabled = true;
     }
     else{
         document.getElementById('register-last-name').disabled = false;
@@ -158,7 +189,10 @@ function validateFirstName(event) {
 
 function validateLastName(event) {
 	if(!(/^[a-zA-Z ]+$/.test(event.target.value))){
-		document.getElementById('register-account').disabled = true;
+        if(document.getElementById('register-last-name').value == ''){
+            document.getElementById('register-email').disabled = true;
+        }
+        document.getElementById('register-account').disabled = true;
     }
     else{
         document.getElementById('register-email').disabled = false;
@@ -171,6 +205,20 @@ function validateEmail(event) {
     }else{
         document.getElementById('register-account').disabled = false;
     }
+}
+
+function undisableRegisterButton() {
+    if(
+        document.getElementById('register-username').value != '' &&
+        document.getElementById('register-password').value != '' &&
+        document.getElementById('register-first-name').value != '' &&
+        document.getElementById('register-last-name').value != '' &&
+        document.getElementById('register-email').value != ''
+    ) {
+        document.getElementById('register-account').disabled = false;
+    } else {
+        document.getElementById('register-account').disabled = true;
+    }   
 }
 
 async function register() {
@@ -481,7 +529,9 @@ async function loadReimbursement() {
      document.getElementById('reimbursement-success').hidden = true;
      document.getElementById('reim-amount').addEventListener('blur', validateAmount);
      document.getElementById('reim-description').addEventListener('blur', validateDescription);
+     document.getElementById('reim-description').addEventListener('input', undisableNewReimbursementButton);
      document.getElementById('register-reimbursement').addEventListener('click', newReimbursement);
+     document.getElementById('back-to-dashboard').addEventListener('click', getDashboard);
  
      document.getElementById('reim-description').disabled = true;
      document.getElementById('register-reimbursement').disabled = true;
@@ -489,9 +539,13 @@ async function loadReimbursement() {
  
  
  function validateAmount(event) {
-     if ((/^\s*-?\d+(\.\d{1,2})?\s*$/).test(event.target.value) && 0 < event.target.value.length && event.target.value.length < 8 ) {
+     if ((/^\s*-?\d+(\.\d{1,2})?\s*$/).test(event.target.value) && 0 < event.target.value.length && event.target.value.length < 8 
+        && document.getElementById('reim-amount').value >= 1) {
          document.getElementById('reim-description').disabled = false;
      } else {
+        if(document.getElementById('reim-amount').value == '') {
+            document.getElementById('reim-description').disabled = true;
+         }
         document.getElementById('register-reimbursement').disabled = true;
      } 
  }
@@ -499,6 +553,15 @@ async function loadReimbursement() {
  function validateDescription(event) {
      if (10 < event.target.value.length && event.target.value.length < 250) {
          document.getElementById('register-reimbursement').disabled = false; 
+     } else {
+        document.getElementById('register-reimbursement').disabled = true;
+     }
+ }
+
+ function undisableNewReimbursementButton () {
+     if(document.getElementById('reim-amount').value != '' && document.getElementById('reim-description').value != ''
+        && document.getElementById('reim-amount').value >= 1) {
+        document.getElementById('register-reimbursement').disabled = false;
      } else {
         document.getElementById('register-reimbursement').disabled = true;
      }
